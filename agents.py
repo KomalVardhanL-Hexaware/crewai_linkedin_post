@@ -5,15 +5,16 @@ from crewai import Agent
 from crewai_tools import ScrapeWebsiteTool, SerperDevTool
 from dotenv import load_dotenv
 from langchain_mistralai import ChatMistralAI
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureOpenAI
 
 from tools import scrape_linkedin_posts_tool
 
 load_dotenv()
 
 
-openai_llm = ChatOpenAI(api_key=os.environ.get("OPENAI_API_KEY"), model="gpt-3.5-turbo-0125")
-mistral_llm = ChatMistralAI(api_key=os.environ.get("MISTRAL_API_KEY"), model="mistral-large-latest")
+openai_llm = AzureOpenAI(model="gpt-4")
+openai_llm2 = AzureOpenAI(model="gpt-4")
+# mistral_llm = ChatMistralAI(api_key=os.environ.get("MISTRAL_API_KEY"), model="mistral-large-latest")
 
 scrape_website_tool = ScrapeWebsiteTool()
 search_tool = SerperDevTool()
@@ -58,5 +59,5 @@ doppelganger_agent = Agent(
     ),
     verbose=True,
     allow_delegation=False,
-    llm=mistral_llm
+    llm=openai_llm2
 )
